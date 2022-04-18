@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 
     <!-- style.css -->
-    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="static/css/style.css">
 
 </head>
 
@@ -34,8 +34,8 @@
                     <ul class="nav-right">
                         <li class="user-profile header-notification">
                             <a href="#">
-                                <img src="assets/images/avatar-4.jpg" class="img-radius" alt="user">
-                                <span>Иванова Эльза</span>
+                                <img src="static/images/avatar-4.jpg" class="img-radius" alt="user">
+                                <span>Макаров Андрей</span>
                             </a>
                         </li>
                     </ul>
@@ -80,7 +80,7 @@
                                 <div class="col-md-4" style="z-index: 9">
                                     <ul class="breadcrumb">
                                         <li>
-                                            <a href="index.html" class="pe-2">
+                                            <a href="/" class="pe-2">
                                                 <i class="bi bi-house-fill"></i>
                                             </a>
                                         </li>
@@ -98,83 +98,42 @@
                     <div class="row p-2">
                         <div class="col-xl-4 col-sm-6 col-xs-12">
                             <div class="card prod-view prod-item text-center">
+                                {% for car in car_list %}
+
                                 <div class="prod-img">
-                                    <a href="auto_detail.html" class="hvr-shrink">
-                                        <img src="assets/images/auto/auto1_1.jpg" class="img-fluid" alt="auto1">
-                                    </a>
-                                    <div class="p-new"><a href="auto_detail.html">New</a></div>
+                                    <div class="option-hover">
+                                                                <button type="button"
+                                                                    class="btn btn-success btn-icon waves-effect waves-light m-r-15 hvr-bounce-in option-icon">
+                                                                    <i class="icofont icofont-cart-alt f-20"></i>
+                                                                </button>
+                                                                <button type="button"
+                                                                    class="btn btn-primary btn-icon waves-effect waves-light m-r-15 hvr-bounce-in option-icon">
+                                                                    <i class="icofont icofont-eye-alt f-20"></i>
+                                                                </button>
+                                                                <button type="button"
+                                                                    class="btn btn-danger btn-icon waves-effect waves-light hvr-bounce-in option-icon">
+                                                                    <i class="icofont icofont-heart-alt f-20"></i>
+                                                                </button>
+                                                            </div>
+
+                                    <a href="/auto_detail/{{ car.id }}" class="hvr-shrink">
+                                                                <img src="/static/images/auto/{{ car.img_url }}"
+                                                                    class="img-fluid o-hidden" alt="auto1.jpg">
+                                                            </a>
                                 </div>
                                 <div class="prod-info">
                                     <a href="auto_detail.html">
-                                        <h4>Volkswagen Polo</h4>
+                                         <a href="/auto_detail/{{ car.id }}" class="hvr-shrink">
+
+                                        <h4>{{ car.name_auto }}</h4>
                                     </a>
-                                    <span class="prod-price">7 р/мин</span>
+                                    <span class="prod-price">{{ car.rent_price }} р/мин</span>
                                 </div>
+                                {% endfor %}
                             </div>
                         </div>
-                        <div class="col-xl-4 col-sm-6 col-xs-12">
-                            <div class="card prod-view prod-item text-center">
-                                <div class="prod-img">
-                                    <a href="auto_detail.html" class="hvr-shrink">
-                                        <img src="assets/images/auto/auto5.jpg" class="img-fluid" alt="auto1">
-                                    </a>
-                                    <div class="p-new"><a href="auto_detail.html">New</a></div>
-                                </div>
-                                <div class="prod-info">
-                                    <a href="auto_detail.html">
-                                        <h4>Mercedes CLA</h4>
-                                    </a>
-                                    <span class="prod-price">7.5 р/мин</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-4 col-sm-6 col-xs-12">
-                            <div class="card prod-view prod-item text-center">
-                                <div class="prod-img">
-                                    <a href="auto_detail.html" class="hvr-shrink">
-                                        <img src="assets/images/auto/auto4.jpg" class="img-fluid" alt="auto1">
-                                    </a>
-                                    <div class="p-new"><a href="auto_detail.html">New</a></div>
-                                </div>
-                                <div class="prod-info">
-                                    <a href="auto_detail.html">
-                                        <h4>Toyota Corolla</h4>
-                                    </a>
-                                    <span class="prod-price">6 р/мин</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-4 col-sm-6 col-xs-12">
-                            <div class="card prod-view prod-item text-center">
-                                <div class="prod-img">
-                                    <a href="auto_detail.html" class="hvr-shrink">
-                                        <img src="assets/images/auto/auto2.jpg" class="img-fluid" alt="auto1">
-                                    </a>
-                                </div>
-                                <div class="prod-info">
-                                    <a href="auto_detail.html">
-                                        <h4>Skoda Octavia</h4>
-                                    </a>
-                                    <span class="prod-price">5.5 р/мин</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-4 col-sm-6 col-xs-12">
-                            <div class="card prod-view prod-item text-center">
-                                <div class="prod-img">
-                                    <a href="auto_detail.html" class="hvr-shrink">
-                                        <img src="assets/images/auto/auto3.jpg" class="img-fluid" alt="auto1">
-                                    </a>
-                                </div>
-                                <div class="prod-info">
-                                    <a href="auto_detail.html">
-                                        <h4>Hyundai Solaris</h4>
-                                    </a>
-                                    <span class="prod-price">5 р/мин</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
+
                     <!--====================  End of List of cars ====================-->
 
                 </div>
@@ -185,9 +144,9 @@
     </div>
 </div>
 
-<script src="assets/js/jquery.min.js"></script>
-<script src="assets/js/pcoded.min.js"></script>
-<script src="assets/js/vertical-layout.min.js"></script>
+<script src="static/js/jquery.min.js"></script>
+<script src="static/js/pcoded.min.js"></script>
+<script src="static/js/vertical-layout.min.js"></script>
 </body>
 
 </html>
