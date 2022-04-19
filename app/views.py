@@ -4,7 +4,6 @@ from app import app
 from app.models import Car
 
 
-@app.route('/index.html')
 @app.route('/index')
 @app.route('/')
 def index():
@@ -17,3 +16,10 @@ def index():
         'items_list': items_list,
     }
     return render_template('index.html', **context)
+
+
+@app.route('add-car')
+def add_car():
+
+@app.route('/show-log')
+def show_log():

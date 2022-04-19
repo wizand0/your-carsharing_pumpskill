@@ -1,9 +1,24 @@
 from flask import render_template
 
 from app import app
+from app.models import Car
 
 
 @app.route('/index')
 @app.route('/')
 def index():
-    return render_template('index.html')
+    car_list = Car.query.all()
+    context = {'car_list': car_list}
+    return render_template('index.html', **context)
+
+    context = {
+        'car_list': car_list,
+    }
+    return render_template('index.html', **context)
+
+
+# @app.route('add-car')
+# def add_car():
+#
+# @app.route('/show-log')
+# def show_log():

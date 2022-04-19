@@ -10,7 +10,7 @@ class Car(db.Model):
     price_per_minute = db.Column(db.Float(9, 2))
     cars_transmition = db.Column(db.Boolean)
     images = db.relationship('Images', backref='car', cascade='all,delete')
-    main_img = db.Column(db.Integer, db.ForeignKey('images.id'))
+    #main_img = db.Column(db.Integer, db.ForeignKey('images.id'))
     created = db.Column(db.DateTime, default=datetime.now())
     availability = db.Column(db.Boolean, default=True)
     total_time = db.Column(db.Float)
