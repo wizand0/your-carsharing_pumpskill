@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 
     <!-- style.css -->
-    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="static/css/style.css">
 
 </head>
 
@@ -33,8 +33,8 @@
                     <ul class="nav-right">
                         <li class="user-profile header-notification">
                             <a href="#">
-                                <img src="assets/images/avatar-4.jpg" class="img-radius" alt="user">
-                                <span>Иванова Эльза</span>
+                                <img src="static/images/avatar-4.jpg" class="img-radius" alt="user">
+                                <span>Макаров Андрей</span>
                             </a>
                         </li>
                     </ul>
@@ -52,13 +52,13 @@
                         <div class="main-menu-header" style="min-height: 123px;"></div>
                         <ul class="pcoded-item pcoded-left-item">
                             <li>
-                                <a href="index.html" class="py-3 ps-5">Главная</a>
+                                <a href="/" class="py-3 ps-5">Главная</a>
                             </li>
                             <li>
-                                <a href="auto_create.html" class="py-3 ps-5">Добавить авто</a>
+                                 <a href="/add-car" class="py-3 ps-5">Добавить авто</a>
                             </li>
                             <li>
-                                <a href="rental_log.html" class="py-3 ps-5">Журнал аренды</a>
+                                <a href="/show-log" class="py-3 ps-5">Журнал аренды</a>
                             </li>
                         </ul>
                     </div>
@@ -78,12 +78,12 @@
                                 <div class="col-md-4" style="z-index: 9">
                                     <ul class="breadcrumb">
                                         <li>
-                                            <a href="index.html" class="pe-2">
+                                            <a href="/" class="pe-2">
                                                 <i class="bi bi-house-fill"></i>
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="index.html" class="pe-2">Главная</a>
+                                            <a href="/" class="pe-2">Главная</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -101,15 +101,15 @@
                                     <span>Заполните поля для добавления нового автомобиля в базу</span>
                                 </div>
                                 <div class="card-block">
-                                    <form method="post" enctype="multipart/form-data">
+                                    <form method="post" action="/add-car">
                                         <div class="form-group row">
-                                            <label for="title" class="col-12 col-md-2">Название</label>
+                                            <label for="name" class="col-12 col-md-2">Название</label>
                                             <div class="col-12 col-md-10">
                                                 <input type="text" class="form-control" name="title" id="title">
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="price" class="col-12 col-md-2">
+                                            <label for="price_per_minute" class="col-12 col-md-2">
                                                 Стоимость аренды в минуту
                                             </label>
                                             <div class="col-12 col-md-10">
@@ -163,9 +163,9 @@
     </div>
 </div>
 
-<script src="assets/js/jquery.min.js"></script>
-<script src="assets/js/pcoded.min.js"></script>
-<script src="assets/js/vertical-layout.min.js"></script>
+<script src="static/js/jquery.min.js"></script>
+<script src="static/js/pcoded.min.js"></script>
+<script src="static/js/vertical-layout.min.js"></script>
 </body>
 
 </html>
