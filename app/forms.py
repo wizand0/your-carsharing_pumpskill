@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, FloatField, SelectField, FileField
+from wtforms import StringField, FloatField, SelectField, FileField, MultipleFileField
 from wtforms.validators import DataRequired
 
 
@@ -9,3 +9,4 @@ class CarCreationForm(FlaskForm):
     description = StringField('Description', validators=[DataRequired()])
     price_per_minute = FloatField('Цена в минуту', validators=[DataRequired()])
     cars_transmition = SelectField('cars_transmition', choices=[('auto', 'Автоматическая'), ('Manual', 'Ручная')], validators=[DataRequired()])
+    files = MultipleFileField('images')
