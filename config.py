@@ -12,3 +12,5 @@ class Config:
     SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL', 'sqlite:///' + os.path.join(basedir, 'yourcarsharing.db'))
     SQLALCHEMY_DATABASE_URI = SQLALCHEMY_DATABASE_URI.replace('postgres://', 'postgresql://', 1)
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    STATIC_ROOT = os.path.join(basedir, 'app/static')
+    ALLOWED_EXTENSIONS = ('png', 'jpg', 'jpeg')

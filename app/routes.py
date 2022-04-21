@@ -3,6 +3,8 @@ from app import app, db
 from app.models import Car, Car_Log
 from flask import render_template, request, redirect, url_for
 
+
+
 import os
 
 from app.models import Car
@@ -49,16 +51,34 @@ def add_car():
         new_car.cars_transmition = form.cars_transmition.data
         new_car.availability = form.availability.data
 
-        files = form.files.data
-        for file in files:
-            with open(os.path.join(app.config['STATIC_ROOT'], file), 'wb') as f:
-                f.write(file.read())
+        if form.files.data:
+            file_names = []
+            files = request.files.getlist(form.files.name)
+            for num, file in enumerate(files):
+                file_content = file.stream.read()
+                _, ext = os.path.splitext(file.filename)
+                filename = "Post{}-{}{}".format(new_car.id, str(num), str(ext).lower())
+                with open(os.path.join(app.root_path, 'static\images', filename), 'wb') as f:
+                    f.write(file_content)
+                    file_names.append(filename)
+            new_car.images = file_names
 
-        success_url = url_for('auto_detail', new_car_id=new_car.id)
+
+        # files = form.files.data
+        # for file in files:
+        #     with open(os.path.join(app.config['STATIC_ROOT'], file), 'wb') as f:
+        #         f.write(file.read())
+
+        # media_file = []
+        # for file in form.files.data:
+        #     if file.filename:
+        #         media_file.append(save_media(file))
+
+        #success_url = url_for('auto_detail', new_car_id=new_car.id)
 
         db.session.add(new_car)
         db.session.commit()
 
-        return render_template('auto_detail.html', new_car=new_car, form=form)
-        #return redirect(url_for('auto_detail.html', car_id=form.car.data))
+        #return render_template('auto_detail.html', new_car=new_car, form=form)
+        return redirect(url_for('add_car'))
     return render_template('auto_create.html', form=form)

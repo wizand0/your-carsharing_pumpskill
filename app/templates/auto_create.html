@@ -113,6 +113,23 @@
                                         {{ form.description(class="form-control") }}
                                         <label for="transmition">Коробка передач</label>
                                         {{ form.cars_transmition(class="form-select") }}
+
+                                        {{form.files(class="form-control")}}
+
+
+
+
+<!--                                        {% for field in form %}-->
+<!--                                        <tr>-->
+<!--                                            <td>{% if field.widget.input_type != 'hidden' %} {{ field.label }} {% endif %}</td>-->
+<!--                                            <td>{{ field }}</td>-->
+<!--                                        </tr>-->
+<!--                                        {% endfor %}-->
+
+
+
+
+
                                         <button type="submit" class="btn btn-primary">Сохранить</button>
                                         {% if form.errors %}
                                         <p>{{ form.errors }}</p>
