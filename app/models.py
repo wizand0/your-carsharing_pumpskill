@@ -8,7 +8,7 @@ class Car(db.Model):
     name = db.Column(db.String(150))
     description = db.Column(db.String(250))
     price_per_minute = db.Column(db.Float(9, 2))
-    cars_transmition = db.Column(db.Boolean)
+    cars_transmition = db.Column(db.String(20))
     images = db.relationship('Images', backref='car', cascade='all,delete')
     #main_img = db.Column(db.Integer, db.ForeignKey('images.id'))
     created = db.Column(db.DateTime, default=datetime.now())

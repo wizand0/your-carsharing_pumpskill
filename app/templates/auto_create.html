@@ -109,8 +109,10 @@
                                         {{ form.name(class="form-control") }}
                                         <label for="price_per_minute">Цена:</label>
                                         {{ form.price_per_minute(class="form-control") }}
-                                        <label for="description">Бренд:</label>
-                                        {{ form.description(class="form-select") }}
+                                        <label for="description">Описание:</label>
+                                        {{ form.description(class="form-control") }}
+                                        <label for="transmition">Коробка передач</label>
+                                        {{ form.cars_transmition(class="form-select") }}
                                         <button type="submit" class="btn btn-primary">Сохранить</button>
                                         {% if form.errors %}
                                         <p>{{ form.errors }}</p>
