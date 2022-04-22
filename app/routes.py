@@ -1,14 +1,12 @@
-
 from app import app, db
 from app.models import Car, Car_Log
 from flask import render_template, request, redirect, url_for
-
-
 
 import os
 
 from app.models import Car
 from app.forms import CarCreationForm
+
 
 @app.route('/index')
 @app.route('/')
@@ -23,26 +21,24 @@ def index():
     return render_template('index.html', **context)
 
 
-
-@app.route('/auto-detail/<item_id>', methods=['GET', 'POST'])
-def item_detail(car_id):
-    car = Car.query.get(car_id)
-    form = AddToCartForm()
-    if form.validate_on_submit():
-        car_to_rent = Car_Log()
-        car_to_rent.user = get_user()   # !!!!!!!!!!!!!!!!!!!!!!!!!!!
-        car_to_rent.car = car
-        db.session.add(car_to_rent)
-        db.session.commit()
-        return redirect(url_for('cart'))
-    return render_template('auto_detail.html', car=car, form=form)
-
+@app.route('/auto_detail/<id>', methods=['GET', 'POST'])
+def car_detail(id):
+    car = Car.query.get(id)
+    # form = AddToCartForm()
+    # if form.validate_on_submit():
+    #     car_to_rent = Car_Log()
+    #     car_to_rent.user = get_user()   # !!!!!!!!!!!!!!!!!!!!!!!!!!!
+    #     car_to_rent.car = car
+    #     db.session.add(car_to_rent)
+    #     db.session.commit()
+    #     return redirect(url_for('cart'))
+    return render_template('auto_detail.html', car=car)  # , form=form
 
 
 @app.route('/add-car', methods=['GET', 'POST'])
 def add_car():
     form = CarCreationForm()
- #   form.car.choices = [(car.id, car.name) for car in Car.query.all()]
+    #   form.car.choices = [(car.id, car.name) for car in Car.query.all()]
     if form.validate_on_submit():
         new_car = Car()
         new_car.name = form.name.data
@@ -63,7 +59,6 @@ def add_car():
                     file_names.append(filename)
             new_car.images = file_names
 
-
         # files = form.files.data
         # for file in files:
         #     with open(os.path.join(app.config['STATIC_ROOT'], file), 'wb') as f:
@@ -74,11 +69,11 @@ def add_car():
         #     if file.filename:
         #         media_file.append(save_media(file))
 
-        #success_url = url_for('auto_detail', new_car_id=new_car.id)
+        # success_url = url_for('auto_detail', new_car_id=new_car.id)
 
         db.session.add(new_car)
         db.session.commit()
 
-        #return render_template('auto_detail.html', new_car=new_car, form=form)
+        # return render_template('auto_detail.html', new_car=new_car, form=form)
         return redirect(url_for('add_car'))
     return render_template('auto_create.html', form=form)

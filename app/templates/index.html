@@ -125,9 +125,10 @@
                                     <a href="auto_detail.html">
                                          <a href="/auto_detail/{{ car.id }}" class="hvr-shrink">
 
-                                        <h4>{{ car.name_auto }}</h4>
+                                        <p><h4>{{ car.name }}</h4></p>
                                     </a>
-                                    <span class="prod-price">{{ car.rent_price }} р/мин</span>
+                                        <a href="{{ car.get_absolute_url() }}">{{ car.name }}</a>
+                                    <p><span class="prod-price">{{ car.price_per_minute|round(2)  }} р/мин</span></p>
                                 </div>
                                 {% endfor %}
                             </div>

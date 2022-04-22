@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 
     <!-- style.css -->
-    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="static/css/style.css">
 
 </head>
 
@@ -35,7 +35,7 @@
                     <ul class="nav-right">
                         <li class="user-profile header-notification">
                             <a href="#">
-                                <img src="assets/images/avatar-4.jpg" class="img-radius" alt="user">
+                                <img src="static/images/avatar-4.jpg" class="img-radius" alt="user">
                                 <span>Иванова Эльза</span>
                             </a>
                         </li>
@@ -54,7 +54,7 @@
                         <div class="main-menu-header" style="min-height: 123px;"></div>
                         <ul class="pcoded-item pcoded-left-item">
                             <li>
-                                <a href="index.html" class="py-3 ps-5">Главная</a>
+                                <a href="/" class="py-3 ps-5">Главная</a>
                             </li>
                             <li>
                                 <a href="auto_create.html" class="py-3 ps-5">Добавить авто</a>
@@ -75,13 +75,13 @@
                         <div class="page-block">
                             <div class="row align-items-center">
                                 <div class="col-md-8" style="z-index: 9">
-                                    <h5 class="m-b-10">Автомобиль Mercedes CLA</h5>
+                                    <h5 class="m-b-10">{{ car.name }}</h5>
                                     <p class="m-b-0">Арендуй автомобиль и катайся с удовольствием</p>
                                 </div>
                                 <div class="col-md-4" style="z-index: 9">
                                     <ul class="breadcrumb">
                                         <li>
-                                            <a href="index.html" class="pe-2">
+                                            <a href="/" class="pe-2">
                                                 <i class="bi bi-house-fill"></i>
                                             </a>
                                         </li>
@@ -105,16 +105,16 @@
                                         <div class="swiper mySwiper">
                                             <div class="swiper-wrapper">
                                                 <div class="swiper-slide">
-                                                    <img src="assets/images/auto/auto5.jpg">
+                                                    <img src="static/images/auto/auto5.jpg">
                                                 </div>
                                                 <div class="swiper-slide">
-                                                    <img src="assets/images/auto/auto2.jpg">
+                                                    <img src="static/images/auto/auto2.jpg">
                                                 </div>
                                                 <div class="swiper-slide">
-                                                    <img src="assets/images/auto/auto3.jpg">
+                                                    <img src="static/images/auto/auto3.jpg">
                                                 </div>
                                                 <div class="swiper-slide">
-                                                    <img src="assets/images/auto/auto4.jpg">
+                                                    <img src="static/images/auto/auto4.jpg">
                                                 </div>
                                             </div>
                                             <div class="swiper-button-next"></div>
@@ -124,26 +124,28 @@
                                     </div>
                                     <div class="col-md-8">
                                         <div class="card-header">
-                                            <h2 class="card-title">Mercedes CLA</h2>
+                                            <h2 class="card-title">{{ car.name }}</h2>
                                         </div>
                                         <div class="card-body">
-                                            <p>Здесь выводится описание автомобиля</p>
+                                            <p>{{ car.description }}</p>
                                             <hr class="mt-5 mb-4">
                                             <p>Коробка передач:
+                                                {{ car.cars_transmition }}
                                                 <!-- Если у автомобиля автоматическая коробка передач,-->
                                                 <!-- то должно выводиться "Автомат"-->
-                                                <strong>Автомат</strong>
+<!--                                                <strong>Автомат</strong>-->
                                                 <!-- Если у автомобиля не автоматическая коробка передач,-->
                                                 <!-- то должно выводиться "Механика"-->
                                                 <!--<strong>Механика</strong>-->
                                             </p>
                                             <p>Доступность:
+                                                {{ car.availability }}
                                                 <!-- Если автомобиль свободен, то должно выводиться "Свободен" -->
                                                 <strong class="text-success">Свободен</strong>
                                                 <!-- Если автомобиль занят, то должно выводиться "Занят" -->
                                                 <!--<span class="text-danger">Занят</span>-->
                                             </p>
-                                            <h3>7.5 руб/мин</h3>
+                                            <h3>{{ car.price_per_minute|round(2) }}</h3>
                                             <hr class="mt-4 mb-5">
                                             <form method="post">
                                                 <button type="submit" class="btn btn-success my-1">
@@ -171,9 +173,9 @@
 </div>
 
 
-<script src="assets/js/jquery.min.js"></script>
-<script src="assets/js/pcoded.min.js"></script>
-<script src="assets/js/vertical-layout.min.js"></script>
+<script src="static/js/jquery.min.js"></script>
+<script src="static/js/pcoded.min.js"></script>
+<script src="static/js/vertical-layout.min.js"></script>
 
 <!-- Swiper JS -->
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
