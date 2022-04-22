@@ -11,7 +11,8 @@ class Car(db.Model):
     description = db.Column(db.String(250))
     price_per_minute = db.Column(db.Float(9, 2))
     cars_transmition = db.Column(db.String(20))
-    images = db.relationship('Images', backref='car', cascade='all,delete')
+    # images = db.relationship('Images', backref='car', cascade='all,delete')
+    image = db.Column(db.String())
     created = db.Column(db.DateTime, default=datetime.now())
     availability = db.Column(db.Boolean, default=True)
     total_time = db.Column(db.Float)
@@ -20,8 +21,8 @@ class Car(db.Model):
     def __repr__(self):
         return self.name
 
-    # def logo_url(self):
-    #     return f'/static/{self.images}' if self.logo else ''
+    def logo_url(self):
+        return f'/static/{self.image}' if self.image else ''
 
     def get_absolute_url(self):
         return url_for('car_detail', id=self.id)
