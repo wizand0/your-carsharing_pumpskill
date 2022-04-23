@@ -2,7 +2,7 @@
 <html lang="ru">
 
 <head>
-    <title>Аренда автомобиля</title>
+    <title>Твой каршеринг</title>
 
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -20,7 +20,6 @@
 <body>
 
 <div id="pcoded" class="pcoded">
-
     <div class="pcoded-container">
 
         <!--====================  header menu area ====================-->
@@ -36,7 +35,7 @@
                         <li class="user-profile header-notification">
                             <a href="#">
                                 <img src="static/images/avatar-4.jpg" class="img-radius" alt="user">
-                                <span>Иванова Эльза</span>
+                                <span>Макаров Андрей</span>
                             </a>
                         </li>
                     </ul>
@@ -57,10 +56,10 @@
                                 <a href="/" class="py-3 ps-5">Главная</a>
                             </li>
                             <li>
-                                <a href="auto_create.html" class="py-3 ps-5">Добавить авто</a>
+                                 <a href="/add-car" class="py-3 ps-5">Добавить авто</a>
                             </li>
                             <li>
-                                <a href="rental_log.html" class="py-3 ps-5">Журнал аренды</a>
+                                <a href="/rental_log" class="py-3 ps-5">Журнал аренды</a>
                             </li>
                         </ul>
                     </div>
@@ -75,8 +74,8 @@
                         <div class="page-block">
                             <div class="row align-items-center">
                                 <div class="col-md-8" style="z-index: 9">
-                                    <h5 class="m-b-10">{{ car.name }}</h5>
-                                    <p class="m-b-0">Арендуй автомобиль и катайся с удовольствием</p>
+                                    <h5 class="m-b-10">Список автомобилей</h5>
+                                    <p class="m-b-0">Выбери любой и катайся с поминутной оплатой</p>
                                 </div>
                                 <div class="col-md-4" style="z-index: 9">
                                     <ul class="breadcrumb">
@@ -86,14 +85,15 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="index.html" class="pe-2">Главная</a>
+                                            <a href="/" class="pe-2">Главная</a>
                                         </li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!--====================  End of Page header ====================-->
+                    <!--====================  End of Page header ====================--></div>
+                <div class="pcoded-content">
 
                     <!--====================  Car's info ====================-->
                     <div class="row p-3">
@@ -102,58 +102,54 @@
                                 <div class="row g-0">
                                     <div class="col-md-4">
                                         <!-- Slider -->
-                                        <div class="swiper mySwiper">
-                                            <div class="swiper-wrapper">
-                                                <div class="swiper-slide">
-                                                    <img src="static/images/auto/auto5.jpg">
-                                                </div>
-                                                <div class="swiper-slide">
-                                                    <img src="static/images/auto/auto2.jpg">
-                                                </div>
-                                                <div class="swiper-slide">
-                                                    <img src="static/images/auto/auto3.jpg">
-                                                </div>
-                                                <div class="swiper-slide">
-                                                    <img src="static/images/auto/auto4.jpg">
-                                                </div>
-                                            </div>
-                                            <div class="swiper-button-next"></div>
-                                            <div class="swiper-button-prev"></div>
-                                            <div class="swiper-pagination"></div>
-                                        </div>
+                                        <!--                                        <div class="swiper mySwiper">-->
+                                        <!--                                            <div class="swiper-wrapper">-->
+                                        <!--                                                <div class="swiper-slide">-->
+                                        <!--                                                    <img src="static/images/auto/auto5.jpg">-->
+                                        <!--                                                </div>-->
+                                        <!--                                                <div class="swiper-slide">-->
+                                        <!--                                                    <img src="static/images/auto/auto2.jpg">-->
+                                        <!--                                                </div>-->
+                                        <!--                                                <div class="swiper-slide">-->
+                                        <!--                                                    <img src="static/images/auto/auto3.jpg">-->
+                                        <!--                                                </div>-->
+                                        <!--                                                <div class="swiper-slide">-->
+                                        <!--                                                    <img src="static/images/auto/auto4.jpg">-->
+                                        <!--                                                </div>-->
+                                        <!--                                            </div>-->
+                                        <!--                                            <div class="swiper-button-next"></div>-->
+                                        <!--                                            <div class="swiper-button-prev"></div>-->
+                                        <!--                                            <div class="swiper-pagination"></div>-->
+                                        <!--                                        </div>-->
                                     </div>
                                     <div class="col-md-8">
                                         <div class="card-header">
-                                            <h2 class="card-title">{{ car.name }}</h2>
+                                            <h2 class="card-title">{{ name }}</h2>
                                         </div>
                                         <div class="card-body">
-                                            <p>{{ car.description }}</p>
+                                            <p>{{ description }}</p>
                                             <hr class="mt-5 mb-4">
                                             <p>Коробка передач:
-                                                {{ car.cars_transmition }}
-                                                <!-- Если у автомобиля автоматическая коробка передач,-->
-                                                <!-- то должно выводиться "Автомат"-->
-<!--                                                <strong>Автомат</strong>-->
-                                                <!-- Если у автомобиля не автоматическая коробка передач,-->
-                                                <!-- то должно выводиться "Механика"-->
-                                                <!--<strong>Механика</strong>-->
+                                                {% if cars_transmition == 0 %}
+                                                <strong class="text-success">Механика</strong>
+                                                {% else %}
+                                                <strong class="text-success">Автомат</strong>
+                                                {% endif %}
                                             </p>
                                             <p>Доступность:
-                                                {{ car.availability }}
-                                                <!-- Если автомобиль свободен, то должно выводиться "Свободен" -->
+                                                {% if availability == 0 %}
+                                                <strong class="text-success">Занят</strong>
+                                                {% else %}
                                                 <strong class="text-success">Свободен</strong>
-                                                <!-- Если автомобиль занят, то должно выводиться "Занят" -->
-                                                <!--<span class="text-danger">Занят</span>-->
+                                                {% endif %}
+
                                             </p>
-                                            <h3>{{ car.price_per_minute|round(2) }}</h3>
+                                            <h3>{{ price_per_minute|round(2) }}</h3>
                                             <hr class="mt-4 mb-5">
                                             <form method="post">
                                                 <button type="submit" class="btn btn-success my-1">
                                                     <i class="bi bi-cart4"></i>Арендовать
                                                 </button>
-                                                <a href="auto_update.html" class="btn btn-outline-primary my-1">
-                                                    <i class="bi bi-pencil-square"></i>Редактировать
-                                                </a>
                                             </form>
                                         </div>
                                     </div>
@@ -172,28 +168,9 @@
     </div>
 </div>
 
-
 <script src="static/js/jquery.min.js"></script>
 <script src="static/js/pcoded.min.js"></script>
 <script src="static/js/vertical-layout.min.js"></script>
-
-<!-- Swiper JS -->
-<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-
-<!-- Initialize Swiper -->
-<script>
-    var swiper = new Swiper(".mySwiper", {
-        pagination: {
-            el: ".swiper-pagination",
-            type: "progressbar",
-        },
-        navigation: {
-            nextEl: ".swiper-button-next",
-            prevEl: ".swiper-button-prev",
-        },
-    });
-</script>
-
 </body>
 
 </html>

@@ -59,7 +59,7 @@
                                  <a href="/add-car" class="py-3 ps-5">Добавить авто</a>
                             </li>
                             <li>
-                                <a href="/show-log" class="py-3 ps-5">Журнал аренды</a>
+                                <a href="/rental_log" class="py-3 ps-5">Журнал аренды</a>
                             </li>
                         </ul>
                     </div>
@@ -116,18 +116,18 @@
                                                                 </button>
                                                             </div>
 
-                                    <a href="/auto_detail/{{ car.id }}" class="hvr-shrink">
+                                    <a href="/auto_detail/{{ car.car_id }}" class="hvr-shrink">
                                                                 <img src="/static/images/auto/{{ car.img_url }}"
                                                                     class="img-fluid o-hidden" alt="auto1.jpg">
                                                             </a>
                                 </div>
                                 <div class="prod-info">
                                     <a href="auto_detail.html">
-                                         <a href="/auto_detail/{{ car.id }}" class="hvr-shrink">
+                                         <a href="/auto_detail/{{ car.car_id }}" class="hvr-shrink">
 
                                         <p><h4>{{ car.name }}</h4></p>
                                     </a>
-                                        <a href="{{ car.get_absolute_url() }}">{{ car.name }}</a>
+                                        <a href="/auto_detail/{{ car.car_id }}">{{ car.name }}</a>
                                     <p><span class="prod-price">{{ car.price_per_minute|round(2)  }} р/мин</span></p>
                                 </div>
                                 {% endfor %}

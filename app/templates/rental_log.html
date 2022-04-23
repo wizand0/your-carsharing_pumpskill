@@ -2,7 +2,7 @@
 <html lang="ru">
 
 <head>
-    <title>Журнал аренды</title>
+    <title>Твой каршеринг</title>
 
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 
     <!-- style.css -->
-    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="static/css/style.css">
 
 </head>
 
@@ -34,8 +34,8 @@
                     <ul class="nav-right">
                         <li class="user-profile header-notification">
                             <a href="#">
-                                <img src="assets/images/avatar-4.jpg" class="img-radius" alt="user">
-                                <span>Иванова Эльза</span>
+                                <img src="static/images/avatar-4.jpg" class="img-radius" alt="user">
+                                <span>Макаров Андрей</span>
                             </a>
                         </li>
                     </ul>
@@ -53,13 +53,13 @@
                         <div class="main-menu-header" style="min-height: 123px;"></div>
                         <ul class="pcoded-item pcoded-left-item">
                             <li>
-                                <a href="index.html" class="py-3 ps-5">Главная</a>
+                                <a href="/" class="py-3 ps-5">Главная</a>
                             </li>
                             <li>
-                                <a href="auto_create.html" class="py-3 ps-5">Добавить авто</a>
+                                 <a href="/add-car" class="py-3 ps-5">Добавить авто</a>
                             </li>
                             <li>
-                                <a href="rental_log.html" class="py-3 ps-5">Журнал аренды</a>
+                                <a href="/rental_log" class="py-3 ps-5">Журнал аренды</a>
                             </li>
                         </ul>
                     </div>
@@ -80,12 +80,12 @@
                                 <div class="col-md-4" style="z-index: 9">
                                     <ul class="breadcrumb">
                                         <li>
-                                            <a href="index.html" class="pe-2">
+                                            <a href="/" class="pe-2">
                                                 <i class="bi bi-house-fill"></i>
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="index.html" class="pe-2">Главная</a>
+                                            <a href="/" class="pe-2">Главная</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -112,41 +112,31 @@
                                                 <th>Общая стоимость аренды</th>
                                             </tr>
                                             </thead>
-                                            <tbody>
+                                            {% for el in list_el %}
                                             <tr>
-                                                <td>
-                                                    <img src="assets/images/auto/auto5.jpg" class="avatar">
+                                                <td class="pro-list-img">
+                                                    <img src="/assets/images/auto/{{el['img_url1']}}"
+                                                         class="img-fluid" alt="tbl"
+                                                         style="max-width: 64px;">
                                                 </td>
-                                                <td>
-                                                    <h6><a href="auto_detail.html">Mercedes CLA</a></h6>
+                                                <td class="pro-name">
+
+                                                    <h6>{{ el['name'] }}</h6>
+                                                    <span>{{ description_auto }}</span>
                                                 </td>
-                                                <td>2</td>
-                                                <td>30 мин</td>
-                                                <td>225 руб</td>
+                                                <td>{{ el['rent_count'] }}</td>
+                                                {% if rental_dict[el['name']] == Empty %}
+                                                <td>0 мин.</td>
+                                                {% else %}
+                                                <td>{{rental_dict[el['name']]|round(2, 'common')}} мин.</td>
+                                                {% endif %}
+                                                {% if el['rent_cost'] is none %}
+                                                <td>0</td>
+                                                {% else %}
+                                                <td>{{ el['rent_cost']|round(2, 'common')}} руб.</td>
+                                                {% endif %}
+                                                {% endfor %}
                                             </tr>
-                                            <tr>
-                                                <td>
-                                                    <img src="assets/images/auto/auto4.jpg" class="avatar">
-                                                </td>
-                                                <td>
-                                                    <h6><a href="auto_detail.html">Toyota Corolla</a></h6>
-                                                </td>
-                                                <td>1</td>
-                                                <td>10 мин</td>
-                                                <td>60 руб</td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <img src="assets/images/auto/auto3.jpg" class="avatar">
-                                                </td>
-                                                <td>
-                                                    <h6><a href="auto_detail.html">Hyundai Solaris</a></h6>
-                                                </td>
-                                                <td>3</td>
-                                                <td>10 мин</td>
-                                                <td>180 руб</td>
-                                            </tr>
-                                            </tbody>
                                         </table>
                                     </div>
                                 </div>
@@ -156,14 +146,15 @@
                     <!--====================  End of Table ====================-->
                 </div>
                 <!--====================  End of Page content ====================-->
+
             </div>
         </div>
     </div>
 </div>
 
-<script src="assets/js/jquery.min.js"></script>
-<script src="assets/js/pcoded.min.js"></script>
-<script src="assets/js/vertical-layout.min.js"></script>
+<script src="static/js/jquery.min.js"></script>
+<script src="static/js/pcoded.min.js"></script>
+<script src="static/js/vertical-layout.min.js"></script>
 </body>
 
 </html>

@@ -9,5 +9,5 @@ class CarCreationForm(FlaskForm):
     description = StringField('Description', validators=[DataRequired()])
     price_per_minute = FloatField('Цена в минуту', validators=[DataRequired()])
     cars_transmition = SelectField('cars_transmition', choices=[('auto', 'Автоматическая'), ('Manual', 'Ручная')], validators=[DataRequired()])
-    files = MultipleFileField('images')
+    #files = MultipleFileField('images')
     availability = BooleanField('availability')
