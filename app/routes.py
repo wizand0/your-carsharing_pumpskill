@@ -7,7 +7,7 @@ from flask import render_template, request, redirect, url_for
 import os
 
 from app.models import Car
-from app.forms import CarCreationForm
+from app.forms import CarCreationForm, CarRentForm
 
 
 def allowed_file(filename):
@@ -30,45 +30,34 @@ def index():
 def auto_detail(car_id):
     car = Car.query.get(car_id)
     car_Log = Car_Log.query.filter_by(car_id=car_id).all()
-    # check_transmission = None
-    # check_status = None
-    # if car.cars_transmition == True:
-    #     check_transmission = 'Автомат'
-    # elif car.cars_transmition == False:
-    #     check_transmission = 'Механика'
-    #
-    # if car.availability == True:
-    #     check_status = 'Свободен'
-    # else:
-    #     check_status = 'Занят'
-    #
-    # if request.method == 'POST':
-    #     if request.form.get("delete"):
-    #         db.session.delete(car)
-    #         for one_log in car_Log:
-    #             db.session.delete(one_log)
-    #         db.session.commit()
-    #         return redirect(url_for('index'))
-    #
-    #     if request.form.get("change"):
-    #         new_name = request.form['new_name']
-    #         new_description = request.form['new_description']
-    #         new_price = request.form['new_price']
-    #         new_transmission = request.form['new_transmission']
-    #         new_image = request.form['new_image_url']
-    #
-    #         if new_name:
-    #             car.name = request.form['new_name']
-    #         if new_description:
-    #             car.description = request.form['new_description']
-    #         if new_price:
-    #             car.price_per_minute = request.form['new_price']
-    #         if new_transmission:
-    #             car.cars_transmition = int(request.form['new_transmission'])
-    #         if new_image:
-    #             car.image = request.form['new_image_url']
-    #
-    #         db.session.commit()
+
+    form = CarRentForm()
+
+    if request.method == 'POST':
+        # value = request.form.get('value', '')
+        new_car_log = Car_Log()
+
+
+        # if value == 'rent':
+        if request.form.get('rent') == 'rent':
+            new_car_log = Car_Log()
+            db.session.add(new_car_log)
+            car.availability = 0
+            new_car_log.car_id = car.car_id
+            new_car_log.time_begin = datetime.now()
+
+        # if value == 'free':
+        if request.form.get('free') == 'free':
+            new_car_log = session.query(Car_Log).order_by(Car_Log.car_id.desc()).first()
+            car.availability = 1
+            #new_car_log.car_id = car.car_id
+            new_car_log.time_end = datetime.now()
+            #new_car_log.time_sum = new_car_log.time_end - new_car_log.time_begin
+            #new_car_log.cost = new_car_log.time_sum / 60 * car.price_per_minute
+
+        db.session.commit()
+
+        return redirect(url_for('auto_detail', car_id=car.car_id))
 
         # if request.form.get("rent"):
         #     if request.method == 'POST':
@@ -100,6 +89,7 @@ def auto_detail(car_id):
         'image': car.image,
         'availability': car.availability,
         'car_Log': car_Log,
+        'form': form
     }
     return render_template('auto_detail.html', **context)
 

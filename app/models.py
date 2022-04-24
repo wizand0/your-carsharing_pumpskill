@@ -24,6 +24,7 @@ class Car_Log(db.Model):
     car_id = db.Column(db.Integer, db.ForeignKey('car.car_id'))
     time_begin = db.Column(db.DateTime, default = datetime.now)
     time_end = db.Column(db.DateTime)
+    time_sum = db.Column(db.Float())
     cost = db.Column(db.Float)
 
 
