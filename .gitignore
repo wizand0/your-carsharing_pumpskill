@@ -1,4 +1,7 @@
-
+*.db
+.env
+migrations
+migrations/**
 
 
 
