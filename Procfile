@@ -1,2 +1,2 @@
-web: python onlineshop.py
+web: python yourcarsharing.py
 release: flask db upgrade
