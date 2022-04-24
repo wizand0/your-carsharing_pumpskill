@@ -37,7 +37,6 @@ def auto_detail(car_id):
         # value = request.form.get('value', '')
         # new_car_log = car_log()
 
-
         # if value == 'rent':
         if request.form.get('rent') == 'rent':
             new_car_log = Car_Log()
@@ -45,41 +44,29 @@ def auto_detail(car_id):
             new_car_log.car_id = car.car_id
             new_car_log.time_begin = datetime.now()
             db.session.add(new_car_log)
+            db.session.commit()
 
         # if value == 'free':
         if request.form.get('free') == 'free':
-            new_car_log = session.query(Car_Log).order_by(Car_Log.car_id.desc()).first()
+            new_car_log = db.session.query(Car_Log).filter(Car_Log.car_id == car_id).order_by(
+                Car_Log.time_begin.desc()).first()
 
             car.availability = 1
-            new_car_log.car_id = car.car_id
-            new_car_log.time_end = datetime.now()
-            #new_car_log.time_sum = new_car_log.time_end - new_car_log.time_begin
-            #new_car_log.cost = new_car_log.time_sum / 60 * car.price_per_minute
 
-        db.session.commit()
+            new_car_log.time_end = datetime.now()
+            new_car_log.time_sum = new_car_log.time_end - new_car_log.time_begin
+            new_car_log.time_sum = int(new_car_log.time_sum.seconds / 60)
+            new_car_log.cost = new_car_log.time_sum * car.price_per_minute / 60
+            db.session.commit()
+
+            print(new_car_log.car_id)
+            print(new_car_log.time_begin)
+            print(new_car_log.time_end)
+            print(new_car_log.time_sum)
+
 
         return redirect(url_for('auto_detail', car_id=car.car_id))
 
-        # if request.form.get("rent"):
-        #     if request.method == 'POST':
-        #         if car.availability == False:
-        #             check_status = 'Занят'
-        #             Car.query.filter_by(id=car_id).update({car.availability: 0})
-        #             db.session.add(Car_Log(car_id=car_id, rent_start=datetime.now() + timedelta(hours=3)))
-        #             db.session.commit()
-        #
-        # if request.form.get("free"):
-        #     if request.method == 'POST':
-        #         if car.availability:
-        #             Car.query.filter_by(car_id=car_id).update({"availability": 1})
-        #             for one_log in car_Log:
-        #                 if one_log.time_end is None:
-        #                     car_Log.time_end = datetime.now() + timedelta(hours=3)
-        #                     count_date_sec = (one_log.time_end - one_log.time_begin).seconds
-        #                     count_date = divmod(count_date_sec, 60)
-        #                     cost = car.price_per_minute * count_date[0] + car.price_per_minute / 60 * count_date[1]
-        #                     one_log.cost = cost
-        #                     db.session.commit()
 
     context = {
         'car_id': car.car_id,
@@ -87,7 +74,7 @@ def auto_detail(car_id):
         'description': car.description,
         'price_per_minute': car.price_per_minute,
         'cars_transmition': car.cars_transmition,
-        'image': car.image,
+        # 'image': car.image,
         'availability': car.availability,
         'car_log': car_log,
         'form': form
@@ -104,16 +91,18 @@ def create_auto():
         new_car.description = form.description.data
         new_car.price_per_minute = str(form.price_per_minute.data)
         new_car.cars_transmition = form.cars_transmition.data
-        new_car.availability = form.availability.data
+        new_car.availability = True
 
-        if 'Автоматическая' in new_car.cars_transmition:
-            new_car.cars_transmition = True
-        else:
+        if 'Manual' in new_car.cars_transmition:
             new_car.cars_transmition = False
+        else:
+            new_car.cars_transmition = True
 
         file = form.logo.data
-        if allowed_file(file.filename):
-            logo = f'images/cars/{file.filename}'
+        print(file)
+        if allowed_file(file):
+            logo = f'images/cars/{file}'
+            print(logo)
             file.save(os.path.join(app.config['STATIC_ROOT'], logo))
             new_car.logo = logo
 

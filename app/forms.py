@@ -11,6 +11,8 @@ class CarCreationForm(FlaskForm):
     cars_transmition = SelectField('cars_transmition', choices=[('auto', 'Автоматическая'), ('Manual', 'Ручная')], validators=[DataRequired()])
     #files = MultipleFileField('images')
     availability = BooleanField('availability')
+
+
     logo = FileField()
 
 class CarRentForm(FlaskForm):
