@@ -115,19 +115,16 @@
                                                                     <i class="icofont icofont-heart-alt f-20"></i>
                                                                 </button>
                                                             </div>
+                                    <img src="/static/{{ car.logo }}">
 
-                                    <a href="/auto_detail/{{ car.car_id }}" class="hvr-shrink">
-                                                                <img src="/static/images/auto/{{ car.img_url }}"
-                                                                    class="img-fluid o-hidden" alt="auto1.jpg">
-                                                            </a>
                                 </div>
                                 <div class="prod-info">
-                                    <a href="auto_detail.html">
+                                    <a href="/auto_detail/{{ car.car_id }}">
                                          <a href="/auto_detail/{{ car.car_id }}" class="hvr-shrink">
 
                                         <p><h4>{{ car.name }}</h4></p>
                                     </a>
-                                        <a href="/auto_detail/{{ car.car_id }}">{{ car.name }}</a>
+
                                     <p><span class="prod-price">{{ car.price_per_minute|round(2)  }} р/мин</span></p>
                                 </div>
                                 {% endfor %}

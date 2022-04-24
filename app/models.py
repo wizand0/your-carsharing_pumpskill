@@ -15,6 +15,9 @@ class Car(db.Model):
     availability = db.Column(db.Boolean, default=1)
     logo = db.Column(db.String())
 
+    def logo_url(self):
+        return f'/static/cars/{self.logo}' if self.logo else ''
+
     def get_absolute_url(self):
         return url_for('auto_detail', id=self.id)
 

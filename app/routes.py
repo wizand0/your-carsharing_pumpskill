@@ -1,13 +1,12 @@
-from datetime import datetime, timedelta
+import os
+from datetime import datetime
 
-from app import app, db
-from app.models import Car, Car_Log
 from flask import render_template, request, redirect, url_for
 
-import os
-
-from app.models import Car
+from app import app, db
 from app.forms import CarCreationForm, CarRentForm
+from app.models import Car
+from app.models import Car_Log
 
 
 def allowed_file(filename):
@@ -34,10 +33,7 @@ def auto_detail(car_id):
     form = CarRentForm()
 
     if request.method == 'POST':
-        # value = request.form.get('value', '')
-        # new_car_log = car_log()
 
-        # if value == 'rent':
         if request.form.get('rent') == 'rent':
             new_car_log = Car_Log()
             car.availability = 0
@@ -46,7 +42,6 @@ def auto_detail(car_id):
             db.session.add(new_car_log)
             db.session.commit()
 
-        # if value == 'free':
         if request.form.get('free') == 'free':
             new_car_log = db.session.query(Car_Log).filter(Car_Log.car_id == car_id).order_by(
                 Car_Log.time_begin.desc()).first()
@@ -59,14 +54,7 @@ def auto_detail(car_id):
             new_car_log.cost = new_car_log.time_sum * car.price_per_minute / 60
             db.session.commit()
 
-            print(new_car_log.car_id)
-            print(new_car_log.time_begin)
-            print(new_car_log.time_end)
-            print(new_car_log.time_sum)
-
-
         return redirect(url_for('auto_detail', car_id=car.car_id))
-
 
     context = {
         'car_id': car.car_id,
@@ -74,7 +62,7 @@ def auto_detail(car_id):
         'description': car.description,
         'price_per_minute': car.price_per_minute,
         'cars_transmition': car.cars_transmition,
-        # 'image': car.image,
+        'logo': car.logo,
         'availability': car.availability,
         'car_log': car_log,
         'form': form
@@ -100,8 +88,8 @@ def create_auto():
 
         file = form.logo.data
         print(file)
-        if allowed_file(file):
-            logo = f'images/cars/{file}'
+        if allowed_file(file.filename):
+            logo = f'images/cars/{file.filename}'
             print(logo)
             file.save(os.path.join(app.config['STATIC_ROOT'], logo))
             new_car.logo = logo
