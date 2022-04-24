@@ -29,28 +29,29 @@ def index():
 @app.route('/auto_detail/<int:car_id>', methods=['POST', 'GET'])
 def auto_detail(car_id):
     car = Car.query.get(car_id)
-    car_Log = Car_Log.query.filter_by(car_id=car_id).all()
+    car_log = Car_Log.query.filter_by(car_id=car_id).all()
 
     form = CarRentForm()
 
     if request.method == 'POST':
         # value = request.form.get('value', '')
-        new_car_log = Car_Log()
+        # new_car_log = car_log()
 
 
         # if value == 'rent':
         if request.form.get('rent') == 'rent':
             new_car_log = Car_Log()
-            db.session.add(new_car_log)
             car.availability = 0
             new_car_log.car_id = car.car_id
             new_car_log.time_begin = datetime.now()
+            db.session.add(new_car_log)
 
         # if value == 'free':
         if request.form.get('free') == 'free':
             new_car_log = session.query(Car_Log).order_by(Car_Log.car_id.desc()).first()
+
             car.availability = 1
-            #new_car_log.car_id = car.car_id
+            new_car_log.car_id = car.car_id
             new_car_log.time_end = datetime.now()
             #new_car_log.time_sum = new_car_log.time_end - new_car_log.time_begin
             #new_car_log.cost = new_car_log.time_sum / 60 * car.price_per_minute
@@ -88,7 +89,7 @@ def auto_detail(car_id):
         'cars_transmition': car.cars_transmition,
         'image': car.image,
         'availability': car.availability,
-        'car_Log': car_Log,
+        'car_log': car_log,
         'form': form
     }
     return render_template('auto_detail.html', **context)
