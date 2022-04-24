@@ -146,11 +146,25 @@
                                             </p>
                                             <h3>{{ price_per_minute|round(2) }}</h3>
                                             <hr class="mt-4 mb-5">
-                                            <form method="post">
-                                                <button type="submit" class="btn btn-success my-1">
-                                                    <i class="bi bi-cart4"></i>Арендовать
-                                                </button>
+
+
+
+                                            <form method="POST" class="col-12 col-md-2">
+                                            {% if availability == 1 %}
+                                                <button type="submit" name="rent" value="rent"
+                                                                                    class="btn btn-success waves-effect waves-light m-r-20">Арендовать</button>
+                                                </form>
+                                            {% else %}
+                                                <button type="submit"name="free" value="free"
+                                                                                class="btn btn-success waves-effect waves-light m-r-20">Освободить</button>
+                                            {% endif %}
                                             </form>
+
+
+
+
+
+
                                         </div>
                                     </div>
                                 </div>
