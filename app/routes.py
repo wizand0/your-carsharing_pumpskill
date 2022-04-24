@@ -13,6 +13,7 @@ from app.forms import CarCreationForm
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
 
+
 @app.route('/index')
 @app.route('/')
 def index():
@@ -69,7 +70,6 @@ def auto_detail(car_id):
 
             db.session.commit()
 
-
         if request.form.get("rent"):
             if request.method == 'POST':
                 if car.status:
@@ -102,13 +102,11 @@ def auto_detail(car_id):
         'car_Log': car_Log,
     }
     return render_template('auto_detail.html', **context)
-    # return render_template('auto_detail.html', car=car)
 
 
 @app.route('/add-car', methods=['POST', 'GET'])
 def create_auto():
     form = CarCreationForm()
-        #   form.car.choices = [(car.id, car.name) for car in Car.query.all()]
     if form.validate_on_submit():
         new_car = Car()
         new_car.name = form.name.data
@@ -122,24 +120,20 @@ def create_auto():
         else:
             new_car.cars_transmition = False
 
-
-
-
-
-    # if request.method == 'POST':
-    #     name = request.form['name']
-    #     description = request.form['description']
-    #     price = str(request.form['price'])
-    #     transmission = int(request.form['transmission'])
+        file = form.logo.data
+        if allowed_file(file.filename):
+            logo = f'images/cars/{file.filename}'
+            file.save(os.path.join(app.config['STATIC_ROOT'], logo))
+            new_car.logo = logo
 
         if ',' in new_car.price_per_minute:
-            new_car.price_per_minute =  new_car.price_per_minute.replace(',', '.')
+            new_car.price_per_minute = new_car.price_per_minute.replace(',', '.')
 
-        float_price = float( new_car.price_per_minute)
+        db.session.add(new_car)
 
-        db.session.add(Car(name=new_car.name, description=new_car.description, price_per_minute=float_price, cars_transmition=new_car.cars_transmition))
         db.session.commit()
-        return redirect(url_for('index'))
+
+        return redirect(url_for('auto_detail', car_id=new_car.car_id))
 
     return render_template('auto_create.html', form=form)
 
@@ -150,7 +144,7 @@ def rental_log():
                                   Car_Log.cost).outerjoin(Car_Log, Car.car_id == Car_Log.car_id).all()
     rental_obj = db.session.query(Car.image, Car.name, db.func.count(Car_Log.rent_id).label('rent_count'),
                                   db.func.sum(Car_Log.cost).label('rent_cost')).outerjoin(Car_Log,
-                                                                                         Car.car_id == Car_Log.car_id).group_by(
+                                                                                          Car.car_id == Car_Log.car_id).group_by(
         Car.name).all()
 
     list_el = []
@@ -173,89 +167,3 @@ def rental_log():
         'rental_dict': rental_dict,
     }
     return render_template('rental_log.html', **context)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# @app.route('/auto_detail/<id>', methods=['GET', 'POST'])
-# def car_detail(id):
-#     car = Car.query.get(id)
-#     # form = AddToCartForm()
-#     # if form.validate_on_submit():
-#     #     car_to_rent = Car_Log()
-#     #     car_to_rent.user = get_user()   # !!!!!!!!!!!!!!!!!!!!!!!!!!!
-#     #     car_to_rent.car = car
-#     #     db.session.add(car_to_rent)
-#     #     db.session.commit()
-#     #     return redirect(url_for('cart'))
-#     return render_template('auto_detail.html', car=car)  # , form=form
-#
-#
-# @app.route('/add-car', methods=['GET', 'POST'])
-# def add_car():
-#     form = CarCreationForm()
-#     #   form.car.choices = [(car.id, car.name) for car in Car.query.all()]
-#     if form.validate_on_submit():
-#         new_car = Car()
-#         new_car.name = form.name.data
-#         new_car.description = form.description.data
-#         new_car.price_per_minute = form.price_per_minute.data
-#         new_car.cars_transmition = form.cars_transmition.data
-#         new_car.availability = form.availability.data
-#
-#         file = form.files.data
-#         if allowed_file(file.filename):
-#             image = f'images/cars/{file.filename}'
-#             file.save(os.path.join(app.config['STATIC_ROOT'], image))
-#             new_car.image = image
-#
-#
-#         # image = f'images/{file.filename}'
-#         # file.save(os.path.join(app.config['STATIC_ROOT'], image))
-#         # new_car.image = image
-#
-#         db.session.add(new_car)
-#         db.session.commit()
-#
-#
-#         return redirect(url_for('auto_detail', id=form.new_car.data))
-#     return render_template('auto_create.html', form=form)
-#
-#         #success_url = url_for('car_detail', id=id)
-#
-#     #db.session.add(new_car)
-#
-#
-#         # if form.files.data:
-#         #     file_names = []
-#         #     files = request.files.getlist(form.files.name)
-#         #     for num, file in enumerate(files):
-#         #         file_content = file.stream.read()
-#         #         _, ext = os.path.splitext(file.filename)
-#         #         filename = "Post{}-{}{}".format(new_car.id, str(num), str(ext).lower())
-#         #         with open(os.path.join(app.root_path, 'static\images', filename), 'wb') as f:
-#         #             f.write(file_content)
-#         #             file_names.append(filename)
-#         #     new_car.images = file_names
-#
-#         # files = form.files.data
-#         # for file in files:
-#         #     with open(os.path.join(app.config['STATIC_ROOT'], file), 'wb') as f:
-#         #         f.write(file.read())
-#
-#         # media_file = []
-#         # for file in form.files.data:
-#         #     if file.filename:
-#         #         media_file.append(save_media(file))
-#

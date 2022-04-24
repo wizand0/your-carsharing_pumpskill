@@ -13,6 +13,7 @@ class Car(db.Model):
     # images = db.relationship('Images', backref='car', cascade='all,delete')
     image = db.Column(db.String())
     availability = db.Column(db.Boolean, default=True)
+    logo = db.Column(db.String())
 
     def get_absolute_url(self):
         return url_for('auto_detail', id=self.id)
