@@ -108,9 +108,9 @@ def create_auto():
 
 @app.route('/rental_log', methods=['POST', 'GET'])
 def rental_log():
-    total_list = db.session.query(Car.image, Car.name, Car_Log.rent_id, Car_Log.time_begin, Car_Log.time_end,
+    total_list = db.session.query(Car.logo, Car.name, Car_Log.rent_id, Car_Log.time_begin, Car_Log.time_end,
                                   Car_Log.cost).outerjoin(Car_Log, Car.car_id == Car_Log.car_id).all()
-    rental_obj = db.session.query(Car.image, Car.name, db.func.count(Car_Log.rent_id).label('rent_count'),
+    rental_obj = db.session.query(Car.logo, Car.name, db.func.count(Car_Log.rent_id).label('rent_count'),
                                   db.func.sum(Car_Log.cost).label('rent_cost')).outerjoin(Car_Log,
                                                                                           Car.car_id == Car_Log.car_id).group_by(
         Car.name).all()
